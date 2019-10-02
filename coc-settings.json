@@ -9,6 +9,7 @@
 		"typescript": ["javascript"]
 	},
 
+	"git.addGlameToVirtualText": true,
 	"git.addGlameToBufferVar": true,
 	"git.branchCharacter": "",
 
