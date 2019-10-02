@@ -17,7 +17,7 @@ augroup coc-custom
 	autocmd!
 augroup END
 
-let g:coc_status_error_sign = '•'
+let g:coc_status_error_sign   = '•'
 let g:coc_status_warning_sign = '•'
 
 call AddCocExtension('coc-marketplace')

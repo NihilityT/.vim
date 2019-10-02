@@ -13,9 +13,9 @@ call extend(g:lightline, {
 	\     ],
 	\   ],
 	\   'right': [
-	\     [ 'git-blame', 'winsize', 'percent', 'lineinfo' ],
+	\     [ 'winsize', 'percent', 'lineinfo' ],
 	\     [ 'fileformat', 'fileencoding', 'filetype' ],
-	\     [ 'asyncrun-code', 'asyncrun-status', ],
+	\     [ 'git-blame', 'asyncrun-code', 'asyncrun-status', ],
 	\   ],
 	\ },
 	\ 'component': {

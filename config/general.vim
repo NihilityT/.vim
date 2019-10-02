@@ -11,8 +11,9 @@ set mousehide
 set mousemodel=popup
 set mouse=a
 
-set fileencodings=utf-8,gbk,ucs-bom,cp936
-set fileformats=unix,dos
+setg encoding=utf-8
+setg fileencodings=utf-8,gbk,ucs-bom,cp936
+setg fileformats=unix,dos
 
 set autoindent
 set smarttab
@@ -50,8 +51,9 @@ set showcmd
 set noshowmode
 
 "set colorcolumn=81
-highlight default link guildline ErrorMsg
-call matchadd('guildline', '\%81v', 900) "set column nr
+highlight default link guideline ErrorMsg
+silent! call matchadd('guideline', '\%81v.', 999, 8199981) "set column nr
+" silent! call matchdelete(8199981) "set column nr
 
 set backspace=indent,eol,start
 set showtabline=2
@@ -104,11 +106,11 @@ set splitright
 set autoread
 
 set backup
-set backupdir^=./.vim/backups,D:/.vim/backups,$vim/backups
+set backupdir^=**5/.vim/backups,$vim/backups,$home/.vim/backups
 set undofile
-set undodir^=./.vim/undo,D:/.vim/undo,$vim/undo
+set undodir^=**5/.vim/undo,$vim/undo,$home/.vim/undo
 set swapfile
-set directory^=./.vim/swaps,D:/.vim/swaps,$vim/swaps
+set directory^=**5/.vim/swaps,$vim/swaps,$home/.vim/swaps
 
 let g:vim_indent_cont = 4
 
@@ -128,28 +130,3 @@ if !exists('s:first_load_general')
 	"endif
 endif
 
-augroup vimrc
-	au!
-	au BufWritePost $vimrc,$vim/*.vim source <afile>
-	au BufRead,BufNewFile
-		\ *vimrc,*.vim,$vimrc
-		\ setf vim | setl foldmethod=marker
-	au FileType
-		\ vim
-		\ let &l:ts = 4 | let &l:sw = 4 | let &l:sts = 4
-augroup END
-
-augroup HTML
-	au!
-	" au BufRead,BufNewFile *.wxml setf xml
-	" au BufRead,BufNewFile *.wxss setf css
-	au FileType
-		\ javascript,typescript,html,css,xml,wxml
-		\ let &l:ts = 4 | let &l:sw = 4 | let &l:sts = 4
-augroup END
-
-augroup JavaScript
-	au!
-	" au BufRead,BufNewFile *.wxs setf javascript
-	autocmd FileType javascript let &l:cino = ':0,l1,(0,Ws,j1,J1'
-augroup END
