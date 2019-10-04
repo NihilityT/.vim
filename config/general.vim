@@ -116,15 +116,17 @@ let g:vim_indent_cont = 4
 
 if !exists('s:first_load_general')
 	let s:first_load_general =  1
+
+	set background=dark
+
 	" let g:airline_theme = 'ayu_mirage'
 	" if exists(':AirlineTheme')
 	" AirlineTheme ayu_mirage
 	" endif
 
-	" colorscheme molokai
+	colorscheme molokai
 
-	set background=dark
-	colorscheme gruvbox9
+	" colorscheme gruvbox9
 	"let g:airline_theme = 'onedark'
 	"AirlineTheme onedark
 	"endif

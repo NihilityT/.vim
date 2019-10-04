@@ -43,17 +43,13 @@ call AddPlugin('tpope/vim-repeat')
 call AddPlugin('tpope/vim-surround')
 
 call AddPlugin('octol/vim-cpp-enhanced-highlight')
+call AddPlugin('LucHermitte/lh-vim-lib')
 call AddPlugin('luchermitte/vimfold4c')
 
 call AddPlugin('neoclide/jsonc.vim')
 call AddPlugin('chemzqm/wxapp.vim', {
 	\'on_ft': ['wxml', 'wxss', 'wxs'],
 	\})
-call AddPlugin('vim-scripts/linuxsty.vim', {
-	\'on_ft': ['c', 'cpp'],
-	\'build': 'ln -s indent plugin',
-	\})
-
 call AddPlugin('honza/vim-snippets')
 
 call AddPlugin('scrooloose/nerdcommenter')
