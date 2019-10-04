@@ -1,6 +1,6 @@
 let g:lightline = get(g:, 'lightline', {})
+let g:lightline.colorscheme = 'onedark'
 call extend(g:lightline, {
-	\ 'colorscheme': 'gruvbox9',
 	\ 'active': {
 	\   'left': [
 	\     [ 'mode', 'paste', 'git-branch', ],
