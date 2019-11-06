@@ -1,0 +1,76 @@
+set history=2000
+set whichwrap=b,s,<,>,[,]
+
+set mousemodel=popup
+
+set autoindent
+
+set ttimeout
+set ttimeoutlen=100
+
+set scrolloff=3
+
+set list
+
+set wrap
+set showcmd
+
+set backspace=indent,eol,start
+set laststatus=2
+
+set magic
+
+set textwidth=0
+set number
+
+set cursorline
+set wrapscan
+"set synmaxcol=300
+
+set hlsearch
+set ignorecase
+set smartcase
+set incsearch
+
+let g:vim_indent_cont = 4
+
+let mapleader = ' '
+
+" config
+nnoremap  <Leader>cr :source   $vimrc<CR>
+nnoremap  <Leader>ce :edit     $vimrc<CR>
+noremap   <Leader>DD :%d
+" copy
+noremap   <Leader>v "+
+nnoremap  <Leader>vY :%y +<CR>
+vnoremap  <Leader>vY :y  +<CR>
+noremap   <Leader>" "0
+
+map      <Leader>bd  :Bd<CR>
+map      <Leader>bW  :w!!<CR>
+noremap  <Leader>bw  :w<CR>
+
+noremap  <Leader>nh  :noh<CR>
+
+nnoremap  <Leader>=  :call     util#format()<CR>
+nnoremap          <Leader>o  "oyy:<C-r>=substitute(@o, '\v^\s+\|\s+$', '', 'g')<CR>
+vnoremap          <Leader>o  "oy:<C-r>=substitute(@o, '\v^\s+\|\s+$', '', 'g')<CR>
+nnorema  <Leader>, :<C-u>keeppatterns s/\v\s*$/,<CR>
+nnorema  <Leader>; :<C-u>keeppatterns s/\v\s*$/;<CR>
+
+nnoremap g[ `[v`]
+nnoremap <Leader>< <C-W><
+nnoremap <Leader>> <C-W>>
+nnoremap <Leader>- <C-W>-
+nnoremap <Leader>+ <C-W>+
+
+map <leader>l :exec &conceallevel ? "set conceallevel=0" : "set conceallevel=1"<CR>
+
+nnoremap <F5> :call util#compile()<CR>
+nnoremap <C-F5> :call util#force_compile()<CR>
+
+nnoremap <F6> :call util#run()<CR>
+nnoremap <C-F6> :call util#input_run()<CR>
+
+nnoremap <F7> :call util#compile_run()<CR>
+nnoremap <C-F7> :call util#compile_input_run()<CR>
