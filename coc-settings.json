@@ -9,8 +9,8 @@
 		"typescript": ["javascript"]
 	},
 
-	"git.addGlameToVirtualText": true,
-	"git.addGlameToBufferVar": true,
+	"git.addGBlameToVirtualText": true,
+	"git.addGBlameToBufferVar": true,
 	"git.branchCharacter": "",
 
 	"coc.preferences.currentFunctionSymbolAutoUpdate": true,
