@@ -1,6 +1,5 @@
-bundle/.cache
-bundle/repos
-bundle/cache_vim
-bundle/cache_gvim
-bundle/state_vim.vim
-bundle/state_gvim.vim
+bundle
+cache
+swaps
+undo
+backups
