@@ -97,7 +97,10 @@ set runtimepath^=$dein_dir
 " dein {{{
 " git@github.com:Shougo/dein.vim.git
 if empty(glob('$dein_dir/.git'))
-	exec '!git clone --depth=1 git@github.com:Shougo/dein.vim.git '.$dein_dir
+	exec '!git clone --depth=1 https://github.com/Shougo/dein.vim.git '.$dein_dir
+endif
+if empty(glob('$dein_dir/.git'))
+    finish
 endif
 
 if dein#load_state($bundle)
