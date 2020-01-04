@@ -50,7 +50,7 @@ call AddCocExtension('coc-tag')
 call AddCocExtension('coc-word')
 call AddCocExtension('coc-syntax')
 
-call AddCocExtension('coc-pairs')
+"call AddCocExtension('coc-pairs')
 "call AddCocExtension('coc-prettier')
 
 " Use <tab> for select selections ranges, needs server support, like: coc-tsserver, coc-python
