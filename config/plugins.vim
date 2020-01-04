@@ -75,7 +75,7 @@ call AddPlugin('sgur/vim-textobj-parameter')
 "\'on_ft': ['markdown', 'pandoc.markdown', 'rmd'],
 "\'build': 'cd app & yarn install',
 "\})
-"call AddPlugin('jiangmiao/auto-pairs')
+call AddPlugin('jiangmiao/auto-pairs')
 " call AddPlugin('alvan/vim-closetag')
 " call AddPlugin('NihilityT/Pairs')
 
