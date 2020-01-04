@@ -39,7 +39,7 @@ nmap [c <Plug>(coc-git-prevchunk)
 nmap ]c <Plug>(coc-git-nextchunk)
 
 call AddCocExtension('coc-highlight')
-autocmd coc-custom CursorHold * silent call CocActionAsync('highlight')
+" autocmd coc-custom CursorHold * silent call CocActionAsync('highlight')
 
 call AddCocExtension('coc-python')
 call AddCocExtension('coc-lists')
@@ -54,7 +54,7 @@ call AddCocExtension('coc-pairs')
 "call AddCocExtension('coc-prettier')
 
 " Use <tab> for select selections ranges, needs server support, like: coc-tsserver, coc-python
-nmap <silent> <TAB> <Plug>(coc-range-select)
+nmap <silent> <S-TAB> <Plug>(coc-range-select)
 xmap <silent> <TAB> <Plug>(coc-range-select)
 xmap <silent> <S-TAB> <Plug>(coc-range-select-backword)
 let g:coc_snippet_next = '<tab>'
@@ -79,9 +79,9 @@ inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 " Use <c-space> to trigger completion.
 inoremap <silent><expr> <c-space> coc#refresh()
 
-" Use `[d` and `]d` to navigate diagnostics
-nmap <silent> [d <Plug>(coc-diagnostic-prev)
-nmap <silent> ]d <Plug>(coc-diagnostic-next)
+" Use `[p` and `]p` to navigate diagnostics
+nmap <silent> [p <Plug>(coc-diagnostic-prev)
+nmap <silent> ]p <Plug>(coc-diagnostic-next)
 
 " Remap keys for gotos
 nmap <silent> gd <Plug>(coc-definition)

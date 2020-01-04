@@ -1,7 +1,7 @@
 augroup format_set
 	au!
 	"au BufWritePre * call Format()
-	au BufWritePre * call util#remove_tail_space()
+	"au BufWritePre * call util#remove_tail_space()
 augroup END
 
 augroup CD_ROOT_DIR
