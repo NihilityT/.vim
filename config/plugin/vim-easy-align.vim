@@ -2,4 +2,4 @@
 vmap <Enter> <Plug>(EasyAlign)
 
 " Start interactive EasyAlign for a motion/text object (e.g. eaip)
-nmap ea <Plug>(EasyAlign)
+nmap <Leader>ea <Plug>(EasyAlign)
