@@ -6,7 +6,6 @@ setg fileformats=unix,dos
 " let $NVIM_COC_LOG_LEVEL='debug'
 
 let $vim = fnamemodify(resolve(expand('<sfile>:p')), ':h')
-set runtimepath^=$vim
 
 source $vim/base.vim
 source $vim/config/mappings.vim

@@ -6,7 +6,6 @@ set pumheight=10
 set signcolumn=yes
 set wildmode=list:longest,full
 set whichwrap=b,s,<,>,[,]
-
 set mousehide
 set mousemodel=popup
 set mouse=a
@@ -88,6 +87,9 @@ augroup END
 
 set title
 set wildignorecase
+if empty(glob('%:p*'))
+    set nowildignorecase
+endif
 
 set guicursor=a:block-blinkon0
 set cursorline
