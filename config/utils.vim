@@ -5,8 +5,8 @@ augroup format_set
 augroup END
 
 augroup CD_ROOT_DIR
-	let g:root_wild = ['.git', '.vim', '*.sln']
+	let g:root_wild = get(g:, 'root_wild', ['.git', '.vim', '*.sln'])
 	au!
-	autocmd BufNewFile,BufRead * call util#cd_root()
+	"autocmd BufNewFile,BufRead * call util#cd_root()
 augroup END
 

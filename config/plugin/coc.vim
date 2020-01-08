@@ -34,14 +34,68 @@ call AddCocExtension('coc-vimlsp')
 call AddCocExtension('coc-yaml')
 
 call AddCocExtension('coc-snippets')
-call AddCocExtension('coc-git')
-nmap [c <Plug>(coc-git-prevchunk)
-nmap ]c <Plug>(coc-git-nextchunk)
+"call AddCocExtension('coc-git')
+"nmap [c <Plug>(coc-git-prevchunk)
+"nmap ]c <Plug>(coc-git-nextchunk)
 
 call AddCocExtension('coc-highlight')
 " autocmd coc-custom CursorHold * silent call CocActionAsync('highlight')
 
-call AddCocExtension('coc-python')
+let s:python = {}
+function! s:python.install_lsp(...)
+    let C = get(a:, 1)
+    let job = job_start('pip install python-language-server', {
+        \ 'exit_cb': { job, v -> v == 0 && !empty('C') ? call(C, []) : 0 }
+        \})
+endfunction
+function! s:python.add_to_coc(...)
+    let C = get(a:, 1)
+    call AddCocExtension('coc-python')
+    if !empty(C)
+        call call(C, [])
+    endif
+endfunction
+function! s:python.add(...)
+    if executable('pip')
+        let job = job_start('pip show python-language-server -qq', {
+            \ 'exit_cb': { job, v ->
+            \               v == 0 ? 
+            \                   s:python.add_to_coc() :
+            \                   s:python.install_lsp(s:python.add_to_coc)
+            \ }
+            \})
+    endif
+endfunction
+call s:python.add()
+
+let s:ruby = {}
+function! s:ruby.install_lsp(...)
+    let C = get(a:, 1)
+    let job = job_start('gem install solargraph', {
+        \ 'exit_cb': { job, v -> v == 0 && !empty('C') ? call(C, []) : 0 }
+        \})
+endfunction
+function! s:ruby.add_to_coc(...)
+    let C = get(a:, 1)
+    call AddCocExtension('coc-solargraph')
+    if !empty(C)
+        call call(C, [])
+    endif
+endfunction
+function! s:ruby.add(...)
+    if executable('gem')
+        let job = job_start('gem list -i --silent solargraph', {
+            \ 'exit_cb': { job, v ->
+            \               v == 0 ? 
+            \                   call(s:python.add_to_coc, []) :
+            \                   call(s:python.install_lsp,
+            \                        [s:python.add_to_coc])
+            \ }
+            \})
+    endif
+endfunction
+call s:ruby.add()
+
 call AddCocExtension('coc-lists')
 call AddCocExtension('coc-svg')
 call AddCocExtension('coc-vimtex')

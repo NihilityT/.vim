@@ -1,7 +1,17 @@
-let g:lightline                  = get(g:, 'lightline', {})
-let g:lightline.tabline          = {'left': [['buffers']], 'right': [['close']]}
-let g:lightline.component_expand = {'buffers': 'lightline#bufferline#buffers'}
-let g:lightline.component_type   = {'buffers': 'tabsel'}
+call LightlineExtend('tabline', {
+    \   'left': [
+    \       ['buffers']
+    \   ],
+    \   'right': [
+    \       ['close']
+    \   ]
+    \})
+call LightlineExtend('component_expand', {
+    \   'buffers': 'lightline#bufferline#buffers',
+    \})
+call LightlineExtend('component_type', {
+    \   'buffers': 'tabsel',
+    \})
 
 let g:lightline#bufferline#show_number = 2
 "let g:lightline#bufferline#number_map  = {

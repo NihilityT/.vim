@@ -24,6 +24,11 @@ augroup JavaScript
 	autocmd FileType javascript let &l:cino = ':0,l1,(0,Ws,j1,J1'
 augroup END
 
+augroup JSON
+	au!
+	autocmd FileType json,jsonc let &l:sw=4 | let &l:sts=4 | setl et
+augroup END
+
 function s:clear_highlight()
     if exists('s:highlight_word_under_cursor_id')
         silent! call matchdelete(s:highlight_word_under_cursor_id)
@@ -33,7 +38,7 @@ endfunction
 function s:highlight_pattern(pattern, ...)
     let l:priority = get(a:, 1, 0)
     let l:hi_group = 'highlight_word_under_cursor'
-    exe 'hi default '.l:hi_group.' term=underline cterm=underline gui=underline'
+    exe 'hi default '.l:hi_group.' term=reverse cterm=reverse gui=reverse'
     if exists('s:highlight_word_under_cursor_id')
         call matchadd(l:hi_group, a:pattern, l:priority, s:highlight_word_under_cursor_id)
     else

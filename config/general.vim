@@ -5,6 +5,7 @@ set history=2000
 set pumheight=10
 set signcolumn=yes
 set wildmode=list:longest,full
+set wildmenu
 set whichwrap=b,s,<,>,[,]
 set mousehide
 set mousemodel=popup
@@ -49,10 +50,21 @@ set wrap
 set showcmd
 set noshowmode
 
+if !exists('g:source_type')
+    let g:source_type = ['c', 'cpp', 'python', 'javascript', 'ruby']
+endif
+
 "set colorcolumn=81
 highlight default link guideline ErrorMsg
-silent! call matchadd('guideline', '\%81v.', 999, 8199981) "set column nr
-" silent! call matchdelete(8199981) "set column nr
+augroup g-guidline
+    au!
+    au BufWinEnter *
+        \ silent! call matchdelete(get(w:, 'guideline_id', -1)) |
+        \ if index(g:source_type, &filetype) >= 0 |
+        \   let w:guideline_id = matchadd('guideline', '\%81v.',
+        \                                 999, get(w:, 'guideline_id', -1)) |
+        \ endif
+augroup end
 
 set backspace=indent,eol,start
 set showtabline=2
@@ -61,7 +73,7 @@ set display+=lastline
 set hidden
 
 set foldenable
-set foldmethod=syntax
+set foldmethod=indent
 set foldcolumn=2
 set foldlevelstart=99
 set magic
@@ -75,11 +87,10 @@ set diffopt=vertical
 set showbreak=↪
 
 set textwidth=0
-set wildmenu
 set ruler
 set number
 set relativenumber
-augroup numbertoggle
+augroup number-toggle
   autocmd!
   autocmd BufEnter,FocusGained,InsertLeave,WinEnter * if &nu | set rnu   | endif
   autocmd BufLeave,FocusLost,InsertEnter,WinLeave   * if &nu | set nornu | endif
@@ -92,6 +103,10 @@ if empty(glob('%:p*'))
 endif
 
 set guicursor=a:block-blinkon0
+aug general-vim
+    au!
+    au syntax,colorscheme * hi Cursor term=bold cterm=bold gui=bold
+aug end
 set cursorline
 set wrapscan
 set report=0
@@ -113,11 +128,12 @@ set undofile
 set undodir^=**5/.vim/undo,$vim/undo,$home/.vim/undo
 set swapfile
 set directory^=**5/.vim/swaps,$vim/swaps,$home/.vim/swaps
+setg tags=./.tags;,tags
 
 let g:vim_indent_cont = 4
 
 if !exists('s:first_load_general')
-	let s:first_load_general =  1
+	let s:first_load_general = 1
 
 	set background=dark
 

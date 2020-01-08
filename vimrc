@@ -1,4 +1,4 @@
-language messages zh_CN.utf-8
+silent! language messages zh_CN.utf-8
 setg encoding=utf-8
 setg fileencodings=utf-8,gbk,ucs-bom,cp936
 setg fileformats=unix,dos
