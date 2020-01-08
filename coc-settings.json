@@ -19,7 +19,7 @@
                 ".vim/", ".git/", ".hg/"],
                 "initializationOptions": {
                     "cache": {
-                        "directory": "/tmp/ccls"
+                        "directory": "~/.cache/ccls"
                     }
                 }
         },
