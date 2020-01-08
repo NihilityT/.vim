@@ -1,5 +1,5 @@
 set lines=40
-set columns=100
+set columns=120
 
 set guioptions-=m " Hide menu bar.
 set guioptions-=T " Hide toolbar
@@ -10,10 +10,32 @@ set guioptions-=e " Hide tab
 source $VIMRUNTIME/delmenu.vim
 source $VIMRUNTIME/menu.vim
 
-if g:system.isWindows
-	set guifont=DejaVu_Sans_Mono_for_Powerline:h11:cANSI:qDRAFT,Monaco:h12,Consolas:h12
-elseif g:system.isOSX
-	set guifont=DejaVu\ Sans\ Mono\ for\ Powerline:h11,Monaco:h12,Consolas:h12
-else
-	set guifont=DejaVu\ Sans\ Mono\ for\ Powerline\ 11,Monaco\ 12,Consolas\ 12
-endif
+function s:escape_font(font, option_lst)
+    let font_name = escape(a:font, '\ ')
+    if empty(a:option_lst)
+        return font_name
+    else
+        if g:system.isWindows
+            return font_name.':'.join(a:option_lst, ':')
+        else
+            let height = matchstr(a:option_lst, '^h')
+            if empty(height)
+                return font_name
+            else
+                if g:system.isOSX
+                    return font_name.height
+                else
+                    return font_name.'\ '.height[1:]
+                endif
+            endif
+        endif
+    endif
+endfunction
+
+let s:font_list = [
+    \ s:escape_font('DejaVu Sans Mono for Powerline', ['h11', 'cANSI', 'qDRAFT']),
+    \ s:escape_font('Monaco', ['h12']),
+    \ s:escape_font('Consolas', ['h12']),
+    \]
+
+let &guifont = join(s:font_list, ',')

@@ -1,37 +1,52 @@
 let g:lightline = get(g:, 'lightline', {})
 let g:lightline.colorscheme = 'onedark'
-call extend(g:lightline, {
-	\ 'active': {
+
+function! LightlineExtend(key, value)
+    let g:lightline = get(g:, 'lightline', {})
+    let g:lightline[a:key] = get(g:lightline, a:key, {})
+    call extend(g:lightline[a:key], a:value)
+endfunction
+call LightlineExtend('active', {
 	\   'left': [
-	\     [ 'mode', 'paste', 'git-branch', ],
-	\     [
-	\       'git-status',
-	\       'cocstatus', 'currentfunction',
-	\       'readonly', 'filename',
-	\     ],
-	\     [
-	\     ],
+	\       [ 'mode', 'paste', 'git-branch', ],
+	\       [
+	\         'git-status',
+	\         'cocstatus', 'currentfunction',
+	\         'window-type', 'readonly', 'filename',
+	\       ],
+	\       [
+	\       ],
 	\   ],
 	\   'right': [
-	\     [ 'winsize', 'percent', 'lineinfo' ],
-	\     [ 'fileformat', 'fileencoding', 'filetype' ],
-	\     [ 'git-blame', 'asyncrun-code', 'asyncrun-status', ],
+	\       [ 'winsize', 'percent', 'lineinfo' ],
+	\       [ 'fileformat', 'fileencoding', 'filetype' ],
+	\       [ 'git-blame', 'asyncrun-code', 'asyncrun-status', ],
 	\   ],
-	\ },
-	\ 'component': {
+	\})
+call LightlineExtend('inactive', {
+	\   'left': [
+	\       [ 'window-type', 'filename' ],
+	\   ],
+	\   'right': [
+	\       [ 'winsize', 'percent', 'lineinfo' ],
+	\       [ 'fileformat', 'fileencoding', 'filetype' ],
+	\       [ 'git-blame', 'asyncrun-code', 'asyncrun-status', ],
+	\   ],
+	\})
+call LightlineExtend('component', {
 	\   'lineinfo': '%l/%L:%2c%-V',
-	\ },
-	\ 'component_function': {
+	\})
+call LightlineExtend('component_function', {
 	\   'cocstatus': 'coc#status',
 	\   'currentfunction': 'CocCurrentFunction',
 	\   'git-blame': 'LightlineGitBlame',
 	\   'git-status': 'LightlineGitStatus',
-	\   'git-branch': 'LightlineGitBranch',
+	\   'git-branch': 'fugitive#head',
 	\   'mode': 'LightlineMode',
 	\   'asyncrun-status': 'LightlineAsyncRunStatus',
 	\   'asyncrun-code': 'LightlineAsyncRunCode',
 	\   'winsize': 'LightlineWinSize',
-	\ },
+        \   'window-type': 'LightlineWindowType'
 	\})
 
 function! LightlineMode()
@@ -81,7 +96,12 @@ function! LightlineWinSize() abort
 	return winwidth(0) >= 100 ? winheight(0).'x'.winwidth(0) : ''
 endfunction
 
+function! LightlineWindowType() abort
+    return &previewwindow ? 'P' : "" " empty(getloclist(winnr())) ? 'L' : ''
+endfunction
+
 augroup lightline-custom
 	au!
-	autocmd Syntax * call lightline#enable()
+	autocmd Syntax,ColorScheme * silent! call lightline#enable()
+	autocmd BufWritePost lightline*.vim silent! call lightline#enable()
 augroup END

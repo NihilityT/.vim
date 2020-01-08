@@ -5,7 +5,6 @@ function! SetupCommandAlias(from, to)
 endfunction
 
 call SetupCommandAlias('w!!', 'w !sudo tee > /dev/null %')
-call SetupCommandAlias('Bd', 'bn \| bd #')
 
 
 inoreabbrev thsi this
