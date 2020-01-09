@@ -71,6 +71,7 @@ call AddPlugin('sgur/vim-textobj-parameter')
 
 call AddPlugin('pprovost/vim-ps1')
 
+call AddPlugin('NihilityT/UnderCursor')
 " call AddPlugin('luochen1990/rainbow')
 
 
