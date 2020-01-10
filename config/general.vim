@@ -142,7 +142,8 @@ if !exists('s:first_load_general')
 	" AirlineTheme ayu_mirage
 	" endif
 
-	colorscheme molokai
+	" colorscheme molokai
+	colorscheme onedark
 
 	" colorscheme gruvbox9
 	"let g:airline_theme = 'onedark'
