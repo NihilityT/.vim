@@ -10,7 +10,14 @@ nnoremap <silent> <Leader>vY :%y +<CR>
 vnoremap <silent> <Leader>vY :y  +<CR>
 noremap  <silent> <Leader>" "0
 
-map     <silent> <Leader>bd  :bd<CR>
+noremap <silent> <Leader>bd  :bd<CR>
+noremap <silent> <Leader>bn  :bn<CR>
+noremap <silent> <Leader>bp  :bp<CR>
+noremap <silent> <Leader>bl  :ls<CR>
+noremap <silent> <Leader>bb  :ls<CR>:b
+noremap <silent> <Leader>bs  :sp<CR>
+noremap <silent> <Leader>bv  :vs<CR>
+
 map     <silent> <Leader>bW  :w!!<CR>
 noremap <silent> <Leader>bw  :w<CR>
 
