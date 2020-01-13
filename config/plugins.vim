@@ -59,6 +59,7 @@ call AddPlugin('chemzqm/wxapp.vim', {
 call AddPlugin('honza/vim-snippets')
 
 call AddPlugin('scrooloose/nerdcommenter')
+
 call AddPlugin('tpope/vim-fugitive')
 call AddPlugin('airblade/vim-gitgutter')
 call AddPlugin('junegunn/gv.vim')

@@ -1,6 +1,3 @@
-nnoremap <silent> <Leader>cc :EditConfig coc.vim<CR>
-
-
 function! AddCocExtension(extension)
 	if exists('*coc#add_extension')
 		call coc#add_extension(a:extension)
