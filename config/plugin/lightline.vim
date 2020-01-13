@@ -10,7 +10,6 @@ call LightlineExtend('active', {
 	\   'left': [
 	\       [ 'mode', 'paste', 'git-branch', ],
 	\       [
-	\         'git-status',
 	\         'cocstatus', 'currentfunction',
 	\         'window-type', 'readonly', 'filename',
 	\       ],
@@ -18,7 +17,7 @@ call LightlineExtend('active', {
 	\       ],
 	\   ],
 	\   'right': [
-	\       [ 'winsize', 'percent', 'lineinfo' ],
+	\       [ 'git-status', 'winsize', 'percent', 'lineinfo' ],
 	\       [ 'fileformat', 'fileencoding', 'filetype' ],
 	\       [ 'git-blame', 'asyncrun-code', 'asyncrun-status', ],
 	\   ],
@@ -73,8 +72,9 @@ function! LightlineGitBranch() abort
 endfunction
 
 function! LightlineGitStatus() abort
-	let status = trim(get(b:, 'coc_git_status', ''))
-	return winwidth(0) >= 85 ? status : ''
+	let st = GitGutterGetHunkSummary()
+        let status = ['+:'.st[0], '~:'.st[1], '-:'.st[2]]
+	return winwidth(0) >= 85 ? join(status, ' ') : ''
 endfunction
 
 function! LightlineGitBlame() abort

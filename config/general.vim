@@ -51,7 +51,7 @@ set showcmd
 set noshowmode
 
 if !exists('g:source_type')
-    let g:source_type = ['c', 'cpp', 'python', 'javascript', 'ruby']
+    let g:source_type = ['c', 'cpp', 'python', 'javascript', 'ruby', 'vim']
 endif
 
 "set colorcolumn=81
