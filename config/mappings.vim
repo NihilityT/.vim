@@ -31,9 +31,9 @@ inoremap <C-k> <Up>
 inoremap <C-l> <Right>
 
 inoremap <C-a> <Home>
-inoremap <C-A> <C-a>
+inoremap <A-a> <C-a>
 inoremap <C-e> <End>
-inoremap <C-E> <C-e>
+inoremap <A-e> <C-e>
 
 cnoremap <C-h> <Left>
 cnoremap <C-j> <Down>
@@ -62,10 +62,56 @@ nnoremap <silent> <Leader>=  :call     util#format()<CR>
 
 nnoremap          <Leader>:  "oY:<C-r>=substitute(@o, '\v^\s+\|[[:blank:]\r\n]+$', '', 'g')<CR>
 vnoremap          <Leader>:  "oy:<C-r>=substitute(@o, '\v^\s+\|[[:blank:]\r\n]+$', '', 'g')<CR>
-" todo
-noremap  <silent> <Leader>ga s<C-R>= nr2char('<C-R>"') ?
-	\                                nr2char('<C-R>"') :
-	\                                char2nr('<C-R>"')<CR><Esc>
+
+function! s:is_charcode(str)
+    let charcode_ptns = [
+        \   '\v^\d+$',
+        \   '\v^\\[0-8]{3}$',
+        \   '\v^\\[1-8][0-8]{1,2}$',
+        \   '\v\c^\\x[0-9a-f]{1,2}$',
+        \   '\v\c^\\x[1-9a-f]$',
+        \   '\v^\\u\c[0-9a-f]{1,4}$',
+        \   '\v^\\U\c[0-9a-f]{1,8}$',
+        \]
+    for ptn in charcode_ptns
+        if a:str =~# ptn
+            return 1
+        endif
+    endfor
+    return 0
+endfunction
+
+function! s:charcode_under_cursor()
+    let line = getline('.')
+    let col = col('.')
+    let match = matchstrpos(line, '\v'.
+        \                   '%<'.(col + 1).'c'.
+        \                   '\c(\\[ux]?)?[0-9a-f]*[0-9a-f]+'.
+        \                   '%>'.col.'c'
+        \)
+    return s:is_charcode(match[0]) ? match : ['']
+endfunction
+
+function! CharUnderCursor()
+    let [charcode; pos] = s:charcode_under_cursor()
+    if empty(charcode)
+        return trim(execute('ascii'))
+    else
+        let start_with_oct = '^\\\d'
+        let start_with_hex = '^\\[xu]'
+        if charcode =~# start_with_oct
+            let dec = str2nr(charcode[1:], 8)
+        elseif charcode =~# start_with_hex
+            let dec = str2nr(charcode[2:], 16)
+        else
+            let dec = str2nr(charcode, 10)
+        endif
+        let char = nr2char(dec, 1)
+        return printf('<%s>  %d,  Hex %x,  Octal %o', char, dec, dec, dec)
+    endif
+endfunction
+
+noremap <silent> ga :<C-u>echo CharUnderCursor()<Esc>
 
 noremap <expr> <Leader>, getline('.') =~ '\s$' ? '$ge<Right>C;<Esc>' : 'A;<Esc>'
 noremap <expr> <Leader>; getline('.') =~ '\s$' ? '$ge<Right>C;<Esc>' : 'A;<Esc>'
