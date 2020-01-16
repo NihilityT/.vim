@@ -10,7 +10,7 @@ set guioptions-=e " Hide tab
 source $VIMRUNTIME/delmenu.vim
 source $VIMRUNTIME/menu.vim
 
-function s:escape_font(font, option_lst)
+function! s:escape_font(font, option_lst)
     let font_name = escape(a:font, '\ ')
     if empty(a:option_lst)
         return font_name

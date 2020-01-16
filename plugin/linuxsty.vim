@@ -63,7 +63,7 @@ function s:LinuxFormatting()
     setlocal noexpandtab
 
     setlocal cindent
-    setlocal cinoptions=:0,l1,t0,g0,(0,N-s
+    setlocal cinoptions=:0,l1,t0,g0,(0,N-s,Ws
 endfunction
 
 function s:LinuxKeywords()
