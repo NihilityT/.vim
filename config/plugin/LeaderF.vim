@@ -9,6 +9,7 @@ let g:Lf_HideHelp = 1
 let g:Lf_StlColorscheme = 'one'
 " let g:Lf_PreviewResult = {'Function':0, 'BufTag':0}
 let g:Lf_MruMaxFiles = 2048
+let g:Lf_RecurseSubmodules = 1
 
 if (exists('*popup_create') && has('patch-8.1.2000')) || has('nvim-0.4')
 	let g:Lf_WindowPosition = 'popup'

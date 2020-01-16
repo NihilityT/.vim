@@ -1,11 +1,11 @@
 function! ApplyPlugins()
-	for [repo, options] in items(g:plugins_config)
-		call dein#add(repo, options)
-	endfor
+    for [repo, options] in items(g:plugins_config)
+        call dein#add(repo, options)
+    endfor
 endfunction
 
-function! AddPluginNM(repo, ...)
-	call AddPlugin(a:repo, extend({'merged': 0}, get(a:, 1, {})))
+function! AddPluginNoMerge(repo, ...)
+    call AddPlugin(a:repo, extend({'merged': 0}, get(a:, 1, {})))
 endfunction
 
 call AddPlugin('yianwillis/vimcdoc')
@@ -21,18 +21,18 @@ call AddPlugin('mengelbrecht/lightline-bufferline', {
     \   'depends': 'lightline.vim'
     \})
 
-call AddPluginNM('neoclide/coc.nvim', {
+call AddPluginNoMerge('neoclide/coc.nvim', {
     \   'if': executable('node'),
     \   'rev': 'release',
     \})
-    "\'build': 'yarn install --frozen-lockfile',
+"\'build': 'yarn install --frozen-lockfile',
 
 call AddPlugin('junegunn/vim-easy-align')
 
 call AddPlugin('easymotion/vim-easymotion')
 call AddPlugin('scrooloose/nerdtree', {
-	\'on_cmd': 'NERDTreeToggle',
-	\})
+    \   'on_cmd': 'NERDTreeToggle',
+    \})
 call AddPlugin('airblade/vim-rooter')
 
 call AddPlugin('Yggdroot/LeaderF', {
@@ -49,13 +49,13 @@ call AddPlugin('tpope/vim-surround')
 call AddPlugin('octol/vim-cpp-enhanced-highlight')
 call AddPlugin('LucHermitte/lh-vim-lib')
 call AddPlugin('luchermitte/vimfold4c', {
-    \ 'depends': 'lh-vim-lib',
+    \   'depends': 'lh-vim-lib',
     \})
 
 call AddPlugin('neoclide/jsonc.vim')
 call AddPlugin('chemzqm/wxapp.vim', {
-	\'on_ft': ['wxml', 'wxss', 'wxs'],
-	\})
+    \   'on_ft': ['wxml', 'wxss', 'wxs'],
+    \})
 call AddPlugin('honza/vim-snippets')
 
 call AddPlugin('scrooloose/nerdcommenter')
@@ -103,39 +103,47 @@ endif
 " dein {{{
 " git@github.com:Shougo/dein.vim.git
 if empty(glob('$dein_dir/.git'))
-    let s:init_dein = 1
-	exec '!git clone --depth=1 https://github.com/Shougo/dein.vim.git '.$dein_dir
+    "let s:init_dein = 1
+    exec '!git clone --depth=1 https://github.com/Shougo/dein.vim.git '.$dein_dir
 endif
 if empty(glob('$dein_dir/.git'))
     finish
 endif
 
 if &compatible
-	set nocompatible
+    set nocompatible
 endif
 set runtimepath+=$dein_dir
 
 if dein#load_state($bundle)
-	call dein#begin($bundle)
+    call dein#begin($bundle)
 
-	call dein#add($dein_dir)
-	if !has('nvim')
-		call dein#add('roxma/nvim-yarp')
-		call dein#add('roxma/vim-hug-neovim-rpc')
-	endif
+    call dein#add($dein_dir)
+    if !has('nvim')
+        call dein#add('roxma/nvim-yarp')
+        call dein#add('roxma/vim-hug-neovim-rpc')
+    endif
 
-	call ApplyPlugins()
+    call ApplyPlugins()
 
-	call dein#end()
-	call dein#save_state()
+    call dein#end()
+    call dein#save_state()
 endif
 
 filetype plugin indent on
 syntax enable
 
-if exists('s:init_dein')
-    if dein#check_install()
-        call dein#install()
-    endif
+if dein#check_install()
+    call dein#install()
 endif
+
+let s:bundle_gitkeep_path = expand('$vim/bundle/.gitkeep')
+let s:bundle_gitkeep_date =
+    \ strftime('%Y%m%d', getftime(s:bundle_gitkeep_path))
+let s:current_date = strftime('%Y%m%d')
+if s:bundle_gitkeep_date != s:current_date
+    call dein#update();
+    call writefile([], s:bundle_gitkeep_path)
+endif
+
 " dein }}}
