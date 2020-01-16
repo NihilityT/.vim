@@ -135,3 +135,42 @@ nnoremap <C-F6> :call util#input_run()<CR>
 
 nnoremap <F7>   :call util#compile_run()<CR>
 nnoremap <C-F7> :call util#compile_input_run()<CR>
+
+
+function! VariableNameUnderCursor()
+    let word_under_cursor_pattern = '\v%<'.(col('.') + 1).'c[-_[:alnum:]]+%>'.col('.').'c'
+    return matchstrpos(getline('.'), word_under_cursor_pattern)
+endfunction
+function! ChangeVariableNameUnderCursor()
+    let strpos = VariableNameUnderCursor()
+    let begin_col = strpos[1]
+    let varname_len = strpos[2] - strpos[1]
+    return '0'.begin_col.'lc'.varname_len.'l'
+endfunction
+
+function! ToPascal(str)
+    return substitute(a:str, '\v%([_-]|^)(.)', '\u\1', 'g')
+endfunction
+function! ToCamel(str)
+    return substitute(ToPascal(a:str), '\v\C^[A-Z]', '\l\0', 'g')
+endfunction
+function! ToSnake(str)
+    return substitute(ToCamel(a:str), '\v\C([a-z])([A-Z])', '\1_\l\2', 'g')
+endfunction
+function! ToKebab(str)
+    return substitute(ToSnake(a:str), '_', '-', 'g')
+endfunction
+
+nnoremap <silent> <expr> <leader>tp ChangeVariableNameUnderCursor().
+    \ ToPascal(VariableNameUnderCursor()[0]).'<Esc>'
+nnoremap <silent> <expr> <leader>tc ChangeVariableNameUnderCursor().
+    \ ToCamel(VariableNameUnderCursor()[0]).'<Esc>'
+nnoremap <silent> <expr> <leader>ts ChangeVariableNameUnderCursor().
+    \ ToSnake(VariableNameUnderCursor()[0]).'<Esc>'
+nnoremap <silent> <expr> <leader>tk ChangeVariableNameUnderCursor().
+    \ ToKebab(VariableNameUnderCursor()[0]).'<Esc>'
+
+vnoremap <silent> <leader>tp s<C-r>=ToPascal(@")<CR><Esc>
+vnoremap <silent> <leader>tc s<C-r>=ToCamel(@")<CR><Esc>
+vnoremap <silent> <leader>ts s<C-r>=ToSnake(@")<CR><Esc>
+vnoremap <silent> <leader>tk s<C-r>=ToKebab(@")<CR><Esc>
