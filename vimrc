@@ -13,7 +13,6 @@ source $vim/config/abbrevs.vim
 source $vim/config/commands.vim
 source $vim/config/utils.vim
 
-source $vim/config/addplugin.vim
 source $vim/config/plugins.vim
 
 source $vim/config/autocmd.vim
