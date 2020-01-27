@@ -51,18 +51,18 @@ set showcmd
 set noshowmode
 
 if !exists('g:source_type')
-    let g:source_type = ['c', 'cpp', 'python', 'javascript', 'ruby', 'vim']
+    let g:source_type = ['c', 'cpp', 'python', 'java', 'javascript', 'ruby', 'vim']
 endif
 
 "set colorcolumn=81
-highlight default link guideline ErrorMsg
+highlight link guideline DiffDelete
 augroup g-guidline
     au!
-    au BufWinEnter *
+    au BufWinEnter,FileType *
         \ silent! call matchdelete(get(w:, 'guideline_id', -1)) |
         \ if index(g:source_type, &filetype) >= 0 |
-        \   let w:guideline_id = matchadd('guideline', '\%81v.',
-        \                                 999, get(w:, 'guideline_id', -1)) |
+        \   let w:guideline_id = matchadd('guideline', '\%81v.', 999,
+        \                                 get(w:, 'guideline_id', -1)) |
         \ endif
 augroup end
 
@@ -74,7 +74,7 @@ set hidden
 
 set foldenable
 set foldmethod=indent
-set foldcolumn=2
+" set foldcolumn=2
 set foldlevelstart=99
 set magic
 set showmatch
@@ -143,7 +143,8 @@ if !exists('s:first_load_general')
 	" endif
 
 	" colorscheme molokai
-	colorscheme onedark
+	" colorscheme onedark
+	colorscheme one
 
 	" colorscheme gruvbox9
 	"let g:airline_theme = 'onedark'

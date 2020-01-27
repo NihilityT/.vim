@@ -1,3 +1,5 @@
+source $vim/config/addplugin.vim
+
 function! ApplyPlugins()
     for [repo, options] in items(g:plugins_config)
         call dein#add(repo, options)
@@ -15,6 +17,7 @@ call AddPlugin('tomasr/molokai')
 call AddPlugin('joshdick/onedark.vim')
 call AddPlugin('taigacute/gruvbox9')
 call AddPlugin('itchyny/landscape.vim')
+call AddPlugin('rakr/vim-one')
 
 call AddPlugin('itchyny/lightline.vim')
 call AddPlugin('mengelbrecht/lightline-bufferline', {
@@ -33,6 +36,21 @@ call AddPlugin('easymotion/vim-easymotion')
 call AddPlugin('scrooloose/nerdtree', {
     \   'on_cmd': 'NERDTreeToggle',
     \})
+call AddPlugin('Xuyuanp/nerdtree-git-plugin', {
+    \   'depends': 'nerdtree',
+    \   'on_source': 'nerdtree',
+    \})
+
+" https://github.com/haasosaurus/nerd-fonts/tree/regen-mono-font-fix/patched-fonts/Hack/Regular/complete
+call AddPlugin('ryanoasis/vim-devicons', {
+    \   'depends': ['nerdtree', 'nerdtree-git-plugin'],
+    \   'on_source': ['nerdtree', 'nerdtree-git-plugin'],
+    \})
+call AddPlugin('tiagofumo/vim-nerdtree-syntax-highlight', {
+    \   'depends': ['vim-devicons', 'nerdtree'],
+    \   'on_source': ['vim-devicons', 'nerdtree'],
+    \})
+
 call AddPlugin('airblade/vim-rooter')
 
 call AddPlugin('Yggdroot/LeaderF', {
@@ -87,6 +105,9 @@ call AddPlugin('NihilityT/UnderCursor')
 "\'build': 'cd app & yarn install',
 "\})
 call AddPlugin('jiangmiao/auto-pairs')
+call AddPlugin('andymass/vim-matchup')
+" packadd! matchit
+
 " call AddPlugin('alvan/vim-closetag')
 " call AddPlugin('NihilityT/Pairs')
 
@@ -98,7 +119,6 @@ endif
 " call AddPlugin('w0rp/ale')
 " call AddPlugin('jeffkreeftmeijer/vim-numbertoggle')
 "call AddPlugin('pangloss/vim-javascript')
-
 
 " dein {{{
 " git@github.com:Shougo/dein.vim.git
@@ -137,13 +157,16 @@ if dein#check_install()
     call dein#install()
 endif
 
-let s:bundle_gitkeep_path = expand('$vim/bundle/.gitkeep')
-let s:bundle_gitkeep_date =
-    \ strftime('%Y%m%d', getftime(s:bundle_gitkeep_path))
-let s:current_date = strftime('%Y%m%d')
-if s:bundle_gitkeep_date != s:current_date
-    call dein#update();
-    call writefile([], s:bundle_gitkeep_path)
-endif
+" let s:bundle_gitkeep_path = expand('$vim/bundle/.gitkeep')
+" let s:bundle_gitkeep_date =
+"     \ strftime('%Y%m%d', getftime(s:bundle_gitkeep_path))
+" let s:current_date = strftime('%Y%m%d')
+" if s:bundle_gitkeep_date != s:current_date
+"     call dein#update()
+"     call writefile([], s:bundle_gitkeep_path)
+" endif
 
 " dein }}}
+
+command! -nargs=* Pupdate call dein#update(<args>)
+command! -nargs=* Pinstall call dein#install(<args>)

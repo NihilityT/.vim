@@ -20,11 +20,6 @@ noremap <silent> <Leader>bb  :<C-u>ls<CR>:b
 noremap <silent> <Leader>bs  :<C-u>sp<CR>
 noremap <silent> <Leader>bv  :<C-u>vs<CR>
 
-noremap  <C-h> <Left>
-noremap  <C-j> <Down>
-noremap  <C-k> <Up>
-noremap  <C-l> <Right>
-
 inoremap <C-h> <Left>
 inoremap <C-j> <Down>
 inoremap <C-k> <Up>
@@ -52,16 +47,37 @@ noremap  <A-h> <C-w>h
 noremap  <A-j> <C-w>j
 noremap  <A-k> <C-w>k
 noremap  <A-l> <C-w>l
+noremap  <A-c> <C-w>c
+noremap  <A-o> <C-w>o
 
 noremap <silent> <Leader>W  :w!!<CR>
 noremap <silent> <Leader>w  :w<CR>
 
-noremap <silent> <Leader>nh  :noh<CR>
+nnoremap <silent> <Esc> :noh<CR>
+
+nnoremap <expr> n 'Nn'[v:searchforward]
+nnoremap <expr> N 'nN'[v:searchforward]
+
+nnoremap [e :<c-u>execute 'move -1-'. v:count1<cr>
+nnoremap ]e :<c-u>execute 'move +'. v:count1<cr>
+
+nnoremap [<space> :<c-u>put! =repeat(nr2char(10), v:count1)<cr>'[
+nnoremap ]<space> :<c-u>put =repeat(nr2char(10), v:count1)<cr>
+
+nnoremap <silent> <c-l> :nohlsearch<cr>:diffupdate<cr>:syntax sync fromstart<cr><c-l>
+
+xnoremap <  <gv
+xnoremap >  >gv
+
+nnoremap j  jzz
+nnoremap k  kzz
 
 nnoremap <silent> <Leader>=  :call     util#format()<CR>
 
 nnoremap          <Leader>:  "oY:<C-r>=substitute(@o, '\v^\s+\|[[:blank:]\r\n]+$', '', 'g')<CR>
 vnoremap          <Leader>:  "oy:<C-r>=substitute(@o, '\v^\s+\|[[:blank:]\r\n]+$', '', 'g')<CR>
+
+nnoremap <leader>m  :<c-u><c-r><c-r>='let @'. v:register .' = '. string(getreg(v:register))<cr><c-f><left>
 
 function! s:is_charcode(str)
     let charcode_ptns = [
@@ -116,16 +132,13 @@ noremap <silent> ga :<C-u>echo CharUnderCursor()<Esc>
 noremap <expr> <Leader>, getline('.') =~ '\s$' ? '$ge<Right>C;<Esc>' : 'A;<Esc>'
 noremap <expr> <Leader>; getline('.') =~ '\s$' ? '$ge<Right>C;<Esc>' : 'A;<Esc>'
 
-nnoremap <Leader>o o<Esc>
-nnoremap <Leader>O O<Esc>
-
 nnoremap g[ `[v`]
 nnoremap <Leader>< <C-W><
 nnoremap <Leader>> <C-W>>
 nnoremap <Leader>- <C-W>-
 nnoremap <Leader>+ <C-W>+
 
-noremap <leader>l :<C-u>let &conceallevel = &conceallevel ? 0 : 1<CR>
+noremap <silent> <leader>l :<C-u>let &conceallevel = &conceallevel ? 0 : 1<CR>:set conceallevel?<CR>
 
 nnoremap <F5>   :call util#compile()<CR>
 nnoremap <C-F5> :call util#force_compile()<CR>

@@ -1,6 +1,6 @@
 augroup vimrc
 	au!
-	au BufWritePost $vimrc,$vim/*.vim source <afile>
+	au BufWritePost $vimrc,$vim/*.vim,$vim/*vimrc source <afile>
 	au BufRead,BufNewFile
 		\ *vimrc,*.vim,$vimrc
 		\ setf vim | setl foldmethod=marker
