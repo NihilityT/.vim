@@ -124,11 +124,12 @@ set autoread
 
 set backup
 set backupdir^=**5/.vim/backups,$vim/backups,$home/.vim/backups
+set backupext=.~
 set undofile
 set undodir^=**5/.vim/undo,$vim/undo,$home/.vim/undo
 set swapfile
 set directory^=**5/.vim/swaps,$vim/swaps,$home/.vim/swaps
-setg tags=./.tags;,tags
+setg tags=./*/.tags;,./\.?*/.tags;,.tags,./*/tags;,./\.?*/tags;,tags
 
 let g:vim_indent_cont = 4
 

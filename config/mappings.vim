@@ -42,7 +42,6 @@ cnoremap <C-b> <Left>
 cnoremap <C-d> <Del>
 cnoremap <C-f> <C-d>
 
-
 noremap  <A-h> <C-w>h
 noremap  <A-j> <C-w>j
 noremap  <A-k> <C-w>k
@@ -50,13 +49,31 @@ noremap  <A-l> <C-w>l
 noremap  <A-c> <C-w>c
 noremap  <A-o> <C-w>o
 
+noremap 0 ^
+noremap ^ 0
+
 noremap <silent> <Leader>W  :w!!<CR>
 noremap <silent> <Leader>w  :w<CR>
 
-nnoremap <silent> <Esc> :noh<CR>
+function s:text_browsing()
+    augroup text-browsing
+        au!
+        au CursorMoved * normal! zz
+        "au CursorMoved * exec mode() ==# 'n' ? 'normal! zz' : ''
+        "au CursorHold * normal! zz
+    augroup END
 
-nnoremap <expr> n 'Nn'[v:searchforward]
-nnoremap <expr> N 'nN'[v:searchforward]
+    if exists('#text-browsing#CursorMoved')
+        noremap j jzz
+        noremap k kzz
+        noremap <c-o> <c-o>zz
+        noremap <c-i> <c-i>zz
+        noremap <expr> n 'Nn'[v:searchforward].'zz'
+        noremap <expr> N 'nN'[v:searchforward].'zz'
+    endif
+endfunction
+
+call s:text_browsing()
 
 nnoremap [e :<c-u>execute 'move -1-'. v:count1<cr>
 nnoremap ]e :<c-u>execute 'move +'. v:count1<cr>
@@ -66,20 +83,17 @@ nnoremap ]<space> :<c-u>put =repeat(nr2char(10), v:count1)<cr>
 
 nnoremap <silent> <c-l> :nohlsearch<cr>:diffupdate<cr>:syntax sync fromstart<cr><c-l>
 
-xnoremap <  <gv
-xnoremap >  >gv
-
-nnoremap j  jzz
-nnoremap k  kzz
+xnoremap < <gv
+xnoremap > >gv
 
 nnoremap <silent> <Leader>=  :call     util#format()<CR>
 
 nnoremap          <Leader>:  "oY:<C-r>=substitute(@o, '\v^\s+\|[[:blank:]\r\n]+$', '', 'g')<CR>
 vnoremap          <Leader>:  "oy:<C-r>=substitute(@o, '\v^\s+\|[[:blank:]\r\n]+$', '', 'g')<CR>
 
-nnoremap <leader>m  :<c-u><c-r><c-r>='let @'. v:register .' = '. string(getreg(v:register))<cr><c-f><left>
+nnoremap <leader>m :<c-u><c-r><c-r>='let @'.v:register.' = '.string(getreg(v:register))<cr><c-f><left>
 
-function! s:is_charcode(str)
+function! IsCharCode(str)
     let charcode_ptns = [
         \   '\v^\d+$',
         \   '\v^\\[0-8]{3}$',
@@ -97,7 +111,7 @@ function! s:is_charcode(str)
     return 0
 endfunction
 
-function! s:charcode_under_cursor()
+function! CharCodeUnderCursor()
     let line = getline('.')
     let col = col('.')
     let match = matchstrpos(line, '\v'.
@@ -105,29 +119,70 @@ function! s:charcode_under_cursor()
         \                   '\c(\\[ux]?)?[0-9a-f]*[0-9a-f]+'.
         \                   '%>'.col.'c'
         \)
-    return s:is_charcode(match[0]) ? match : ['']
+    return IsCharCode(match[0]) ? match : []
 endfunction
 
-function! CharUnderCursor()
-    let [charcode; pos] = s:charcode_under_cursor()
-    if empty(charcode)
+function! CharCode2Char(charcode)
+    let start_with_oct = '^\\\d'
+    let start_with_hex = '^\\[xu]'
+    if a:charcode =~# start_with_oct
+        let dec = str2nr(a:charcode[1:], 8)
+    elseif a:charcode =~# start_with_hex
+        let dec = str2nr(a:charcode[2:], 16)
+    else
+        let dec = str2nr(a:charcode, 10)
+    endif
+    return nr2char(dec)
+endfunction
+
+function! EscapeChar(char)
+    let map = {
+        \ "\b": '\b',
+        \ "\e": '\e',
+        \ "\f": '\f',
+        \ "\n": '\n',
+        \ "\r": '\r',
+        \ "\t": '\t',
+        \ "\\": '\',
+        \ "\"": '"',
+        \}
+    return get(map, a:char, a:char)
+endfunction
+
+function! LiteralChar(char)
+    let map = {
+        \ "\b": 'BS',
+        \ "\e": 'Esc',
+        \ "\f": 'FF',
+        \ "\n": 'NL',
+        \ "\r": 'CR',
+        \ "\t": 'Tab',
+        \}
+    return get(map, a:char, a:char)
+endfunction
+
+function! EscapeString(string)
+  return substitute(a:string,
+      \ "[\b\e\f\n\r\t\\\"]", '\=EscapeChar(submatch(0))', 'g')
+endfunction
+
+function! EchoCharUnderCursor()
+    let charcode_strpos = CharCodeUnderCursor()
+    if empty(charcode_strpos)
         return trim(execute('ascii'))
     else
-        let start_with_oct = '^\\\d'
-        let start_with_hex = '^\\[xu]'
-        if charcode =~# start_with_oct
-            let dec = str2nr(charcode[1:], 8)
-        elseif charcode =~# start_with_hex
-            let dec = str2nr(charcode[2:], 16)
-        else
-            let dec = str2nr(charcode, 10)
-        endif
-        let char = nr2char(dec, 1)
-        return printf('<%s>  %d,  Hex %x,  Octal %o', char, dec, dec, dec)
+        let char = CharCode2Char(charcode_strpos[0])
+        let dec = char2nr(char)
+        return printf('<%s>  %d,  Hex %x,  Octal %o', LiteralChar(char), dec, dec, dec)
     endif
 endfunction
 
-noremap <silent> ga :<C-u>echo CharUnderCursor()<Esc>
+nnoremap <silent> ga :<C-u>echo EchoCharUnderCursor()<Esc>
+nnoremap <silent> <expr> <leader>ga
+    \ (empty(CharCodeUnderCursor()) ? 's' : 'ciw').
+    \ '<c-r>=IsCharCode(@") ? EscapeChar(CharCode2Char(@")) : char2nr(@")<cr><esc>'
+vnoremap <silent> ga
+    \ s<c-r>=IsCharCode(@") ? EscapeChar(CharCode2Char(@")) : char2nr(@")<cr><esc>
 
 noremap <expr> <Leader>, getline('.') =~ '\s$' ? '$ge<Right>C;<Esc>' : 'A;<Esc>'
 noremap <expr> <Leader>; getline('.') =~ '\s$' ? '$ge<Right>C;<Esc>' : 'A;<Esc>'
