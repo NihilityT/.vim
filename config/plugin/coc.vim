@@ -1,10 +1,11 @@
-function! AddCocExtension(extension)
-	if exists('*coc#add_extension')
-		call coc#add_extension(a:extension)
-	else
-		let g:coc_global_extensions = get(g:, 'coc_global_extensions', [])
-		call add(g:coc_global_extensions, a:extension)
-	endif
+function! CocAddExtension(extension)
+    if a:0 == 0 | return | endif
+    if exists('*coc#add_extension')
+        call call(coc#add_extension, a:000)
+    else
+        let g:coc_global_extensions = get(g:, 'coc_global_extensions', [])
+        call extend(g:coc_global_extensions, a:000)
+    endif
 endfunction
 
 call SetupCommandAlias('C', 'CocConfig')
@@ -17,25 +18,25 @@ augroup END
 let g:coc_status_error_sign   = '•'
 let g:coc_status_warning_sign = '•'
 
-call AddCocExtension('coc-marketplace')
+call CocAddExtension('coc-marketplace')
 
-call AddCocExtension('coc-tsserver')
-call AddCocExtension('coc-eslint')
+call CocAddExtension('coc-tsserver')
+call CocAddExtension('coc-eslint')
 
-call AddCocExtension('coc-json')
-call AddCocExtension('coc-html')
-call AddCocExtension('coc-css')
-call AddCocExtension('coc-wxml')
+call CocAddExtension('coc-json')
+call CocAddExtension('coc-html')
+call CocAddExtension('coc-css')
+call CocAddExtension('coc-wxml')
 
-call AddCocExtension('coc-vimlsp')
-call AddCocExtension('coc-yaml')
+call CocAddExtension('coc-vimlsp')
+call CocAddExtension('coc-yaml')
 
-call AddCocExtension('coc-snippets')
-"call AddCocExtension('coc-git')
+call CocAddExtension('coc-snippets')
+"call CocAddExtension('coc-git')
 "nmap [c <Plug>(coc-git-prevchunk)
 "nmap ]c <Plug>(coc-git-nextchunk)
 
-call AddCocExtension('coc-highlight')
+call CocAddExtension('coc-highlight')
 " autocmd coc-custom CursorHold * silent call CocActionAsync('highlight')
 
 let s:python = {}
@@ -47,7 +48,7 @@ function! s:python.install_lsp(...)
 endfunction
 function! s:python.add_to_coc(...)
     let C = get(a:, 1)
-    call AddCocExtension('coc-python')
+    call CocAddExtension('coc-python')
     if !empty(C)
         call call(C, [])
     endif
@@ -74,7 +75,7 @@ function! s:ruby.install_lsp(...)
 endfunction
 function! s:ruby.add_to_coc(...)
     let C = get(a:, 1)
-    call AddCocExtension('coc-solargraph')
+    call CocAddExtension('coc-solargraph')
     if !empty(C)
         call call(C, [])
     endif
@@ -93,16 +94,16 @@ function! s:ruby.add(...)
 endfunction
 call s:ruby.add()
 
-call AddCocExtension('coc-lists')
-call AddCocExtension('coc-svg')
-call AddCocExtension('coc-vimtex')
-call AddCocExtension('coc-dictionary')
-call AddCocExtension('coc-tag')
-call AddCocExtension('coc-word')
-call AddCocExtension('coc-syntax')
+call CocAddExtension('coc-lists')
+call CocAddExtension('coc-svg')
+call CocAddExtension('coc-vimtex')
+call CocAddExtension('coc-dictionary')
+call CocAddExtension('coc-tag')
+call CocAddExtension('coc-word')
+call CocAddExtension('coc-syntax')
 
-"call AddCocExtension('coc-pairs')
-"call AddCocExtension('coc-prettier')
+"call CocAddExtension('coc-pairs')
+"call CocAddExtension('coc-prettier')
 
 " Use <tab> for select selections ranges, needs server support, like: coc-tsserver, coc-python
 nmap <silent> <S-TAB> <Plug>(coc-range-select)
@@ -162,6 +163,7 @@ augroup coc-custom
 	autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
 	" Update signature help on jump placeholder
 	autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+	"autocmd CursorHoldI call CocActionAsync('showSignatureHelp')
 augroup end
 
 " Remap for do codeAction of selected region, ex: `<leader>aap` for current paragraph
@@ -190,3 +192,23 @@ nnoremap <silent> <space>cls  :<C-u>CocList -I symbols<cr>
 nnoremap <silent> <space>cn  :<C-u>CocNext<CR>
 " Do default action for previous item.
 nnoremap <silent> <space>cp  :<C-u>CocPrev<CR>
+
+function! CocConfig(section, value)
+    if exists('*coc#config')
+        call coc#config(a:section, a:value)
+    else
+        let g:coc_user_config = get(g:, 'coc_user_config', {})
+        let g:coc_user_config[a:section] = a:value
+    endif
+endfunction
+
+"call CocConfig('json.schemas', [
+    "\ {
+    "\   "name": "compile commands",
+    "\   "fileMatch": ["compile_commands.json"],
+    "\   "url": fnamemodify($vim, ':gs,\,/,').'/compile_commands.schema.json',
+    "\ },
+    "\])
+
+call CocConfig('languageserver.ccls.initializationOptions.cache.directory',
+    \          expand("~/.cache/ccls"))
