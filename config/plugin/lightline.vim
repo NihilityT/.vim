@@ -14,6 +14,7 @@ call LightlineExtend('active', {
 	\         'window-type', 'readonly', 'filename',
 	\       ],
 	\       [
+        \         'plugin-progress',
 	\       ],
 	\   ],
 	\   'right': [
@@ -45,7 +46,8 @@ call LightlineExtend('component_function', {
 	\   'asyncrun-status': 'LightlineAsyncRunStatus',
 	\   'asyncrun-code': 'LightlineAsyncRunCode',
 	\   'winsize': 'LightlineWinSize',
-        \   'window-type': 'LightlineWindowType'
+        \   'window-type': 'LightlineWindowType',
+        \   'plugin-progress': 'LightlinePluginProgress',
 	\})
 
 function! LightlineMode()
@@ -98,6 +100,11 @@ endfunction
 
 function! LightlineWindowType() abort
     return &previewwindow ? 'P' : "" " empty(getloclist(winnr())) ? 'L' : ''
+endfunction
+
+function! LightlinePluginProgress() abort
+    let success = match(dein#get_progress(), 'You may have') >= 0
+    return success ? '' : dein#get_progress() 
 endfunction
 
 augroup lightline-custom
