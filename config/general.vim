@@ -137,6 +137,14 @@ if !exists('s:first_load_general')
 	let s:first_load_general = 1
 
 	set background=dark
+        let s:colorschemes = ['one', 'onedark', 'molokai']
+        for scheme in s:colorschemes
+            try
+                exec 'colorscheme' scheme
+                break
+            catch
+            endtry
+        endfor
 
 	" let g:airline_theme = 'ayu_mirage'
 	" if exists(':AirlineTheme')
@@ -145,7 +153,7 @@ if !exists('s:first_load_general')
 
 	" colorscheme molokai
 	" colorscheme onedark
-	colorscheme one
+	" colorscheme one
 
 	" colorscheme gruvbox9
 	"let g:airline_theme = 'onedark'
