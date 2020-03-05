@@ -65,12 +65,5 @@ nnoremap <Leader>- <C-W>-
 nnoremap <Leader>+ <C-W>+
 
 map <leader>l :exec &conceallevel ? "set conceallevel=0" : "set conceallevel=1"<CR>
-
-nnoremap <F5> :call util#compile()<CR>
-nnoremap <C-F5> :call util#force_compile()<CR>
-
-nnoremap <F6> :call util#run()<CR>
-nnoremap <C-F6> :call util#input_run()<CR>
-
-nnoremap <F7> :call util#compile_run()<CR>
-nnoremap <C-F7> :call util#compile_input_run()<CR>
+noremap n /<cr>
+noremap N ?<cr>

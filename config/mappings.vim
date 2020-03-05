@@ -68,8 +68,10 @@ function s:text_browsing()
         noremap k kzz
         noremap <c-o> <c-o>zz
         noremap <c-i> <c-i>zz
-        noremap <expr> n 'Nn'[v:searchforward].'zz'
-        noremap <expr> N 'nN'[v:searchforward].'zz'
+        " noremap <expr> n 'Nn'[v:searchforward].'zz'
+        " noremap <expr> N 'nN'[v:searchforward].'zz'
+        noremap n /<cr>zz
+        noremap N ?<cr>zz
     endif
 endfunction
 
