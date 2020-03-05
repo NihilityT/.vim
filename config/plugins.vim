@@ -157,18 +157,19 @@ if dein#tap('lightline.vim')
     let g:dein#install_progress_type = 'none'
 endif
 
-let s:bundle_gitkeep_path = expand('$vim/bundle/.gitkeep')
-let s:bundle_gitkeep_date =
-    \ strftime('%Y%m%d', getftime(s:bundle_gitkeep_path))
-let s:current_date = strftime('%Y%m%d')
-if s:bundle_gitkeep_date != s:current_date
-    if dein#check_install()
-        call dein#install()
-    else
-        call dein#update()
-    endif
-    call writefile([], s:bundle_gitkeep_path)
-endif
+" let s:bundle_gitkeep_path = expand('$vim/bundle/.gitkeep')
+" let s:bundle_gitkeep_modify_time_sec =
+"     \ getftime(s:bundle_gitkeep_path)
+" let s:current_time_sec = strftime('%Y%m%d')
+" let s:seven_days_sec = 7 * 24 * 60 * 60
+" if s:current_time_sec > s:bundle_gitkeep_modify_time_sec + s:seven_days_sec
+"     if dein#check_install()
+"         call dein#install()
+"     else
+"         call dein#update()
+"     endif
+"     call writefile([], s:bundle_gitkeep_path)
+" endif
 
 " dein }}}
 
