@@ -29,6 +29,7 @@ call AddPluginNoMerge('neoclide/coc.nvim', {
     \   'rev': 'release',
     \})
 "\'build': 'yarn install --frozen-lockfile',
+call AddPlugin('jackguo380/vim-lsp-cxx-highlight')
 
 call AddPlugin('junegunn/vim-easy-align')
 
