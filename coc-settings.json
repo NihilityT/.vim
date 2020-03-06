@@ -31,6 +31,9 @@
                 "cache": {
                     "directory": "~/.cache/ccls"
                 },
+                "highlight": {
+                    "lsRanges" : true
+                },
             }
         },
         // https://github.com/mads-hartmann/bash-language-server
