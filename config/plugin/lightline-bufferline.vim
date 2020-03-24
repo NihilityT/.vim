@@ -3,7 +3,6 @@ call LightlineExtend('tabline', {
     \       ['buffers']
     \   ],
     \   'right': [
-    \       ['close']
     \   ]
     \})
 call LightlineExtend('component_expand', {
