@@ -46,7 +46,7 @@ nnoremap  <Leader>vY :%y +<CR>
 vnoremap  <Leader>vY :y  +<CR>
 noremap   <Leader>" "0
 
-map      <Leader>bd  :Bd<CR>
+map      <Leader>bd  :bd<CR>
 map      <Leader>bW  :w!!<CR>
 noremap  <Leader>bw  :w<CR>
 
@@ -67,3 +67,6 @@ nnoremap <Leader>+ <C-W>+
 map <leader>l :exec &conceallevel ? "set conceallevel=0" : "set conceallevel=1"<CR>
 noremap n /<cr>
 noremap N ?<cr>
+
+noremap <Leader>w  :w<CR>
+nnoremap <c-l> :nohlsearch<cr>

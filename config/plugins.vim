@@ -52,7 +52,9 @@ call AddPlugin('tiagofumo/vim-nerdtree-syntax-highlight', {
     \   'on_source': ['vim-devicons', 'nerdtree'],
     \})
 
-call AddPlugin('airblade/vim-rooter')
+call AddPlugin('airblade/vim-rooter', {
+    \
+    \})
 
 call AddPlugin('Yggdroot/LeaderF', {
     \   'if': has('python') || has('python3'),

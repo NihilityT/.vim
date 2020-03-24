@@ -1,1 +1,1 @@
-let g:rooter_patterns = ['.git/', '.vscode/', '*.pro', 'compile_commands.json']
+let g:rooter_patterns = ['.git/', '.vscode/', 'CMakeLists.txt', '.pro', '*.pro', 'compile_commands.json']

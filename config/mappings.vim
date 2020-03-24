@@ -48,6 +48,7 @@ noremap  <A-k> <C-w>k
 noremap  <A-l> <C-w>l
 noremap  <A-c> <C-w>c
 noremap  <A-o> <C-w>o
+noremap  <A-]> <C-w>]
 
 noremap 0 ^
 noremap ^ 0
