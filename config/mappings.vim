@@ -56,14 +56,10 @@ noremap ^ 0
 noremap <silent> <Leader>W  :w!!<CR>
 noremap <silent> <Leader>w  :w<CR>
 
-function s:text_browsing()
-    augroup text-browsing
-        au!
-        au CursorMoved * normal! zz
-        "au CursorMoved * exec mode() ==# 'n' ? 'normal! zz' : ''
-        "au CursorHold * normal! zz
-    augroup END
+noremap n /<cr>
+noremap N ?<cr>
 
+function s:text_browsing()
     if exists('#text-browsing#CursorMoved')
         noremap j jzz
         noremap k kzz
@@ -76,7 +72,7 @@ function s:text_browsing()
     endif
 endfunction
 
-call s:text_browsing()
+" call s:text_browsing()
 
 nnoremap [e :<c-u>execute 'move -1-'. v:count1<cr>
 nnoremap ]e :<c-u>execute 'move +'. v:count1<cr>
@@ -91,8 +87,8 @@ xnoremap > >gv
 
 nnoremap <silent> <Leader>=  :call     util#format()<CR>
 
-nnoremap          <Leader>:  "oY:<C-r>=substitute(@o, '\v^\s+\|[[:blank:]\r\n]+$', '', 'g')<CR>
-vnoremap          <Leader>:  "oy:<C-r>=substitute(@o, '\v^\s+\|[[:blank:]\r\n]+$', '', 'g')<CR>
+nnoremap          <Leader>:  "oY:<C-r>=substitute(@o, '\v^\s+\|\_s+$', '', 'g')<CR>
+vnoremap          <Leader>:  "oy:<C-r>=substitute(@o, '\v^\s+\|\_s+$', '', 'g')<CR>
 
 nnoremap <leader>m :<c-u><c-r><c-r>='let @'.v:register.' = '.string(getreg(v:register))<cr><c-f><left>
 
