@@ -228,16 +228,13 @@ function! ToKebab(str)
     return substitute(ToSnake(a:str), '_', '-', 'g')
 endfunction
 
-nnoremap <silent> <expr> <leader>tp ChangeVariableNameUnderCursor().
-    \ ToPascal(VariableNameUnderCursor()[0]).'<Esc>'
-nnoremap <silent> <expr> <leader>tc ChangeVariableNameUnderCursor().
-    \ ToCamel(VariableNameUnderCursor()[0]).'<Esc>'
-nnoremap <silent> <expr> <leader>ts ChangeVariableNameUnderCursor().
-    \ ToSnake(VariableNameUnderCursor()[0]).'<Esc>'
-nnoremap <silent> <expr> <leader>tk ChangeVariableNameUnderCursor().
-    \ ToKebab(VariableNameUnderCursor()[0]).'<Esc>'
+function! s:addNameConvertMap(key, funcname)
+    exec 'nnoremap <silent> <expr> '.a:key.' ChangeVariableNameUnderCursor().
+        \'.a:funcname.'(VariableNameUnderCursor()[0]).''<Esc>'''
+    exec 'vnoremap <silent> '.a:key.' s<C-r>='.a:funcname.'(@")<CR><Esc>'
+endfunction
 
-vnoremap <silent> <leader>tp s<C-r>=ToPascal(@")<CR><Esc>
-vnoremap <silent> <leader>tc s<C-r>=ToCamel(@")<CR><Esc>
-vnoremap <silent> <leader>ts s<C-r>=ToSnake(@")<CR><Esc>
-vnoremap <silent> <leader>tk s<C-r>=ToKebab(@")<CR><Esc>
+call s:addNameConvertMap('<leader>tp', 'ToPascal')
+call s:addNameConvertMap('<leader>tc', 'ToCamel')
+call s:addNameConvertMap('<leader>ts', 'ToSnake')
+call s:addNameConvertMap('<leader>tk', 'ToKebab')
