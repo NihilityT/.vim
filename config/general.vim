@@ -136,18 +136,28 @@ setg tags+=~/.cache/.tags,~/.cache/tags
 
 let g:vim_indent_cont = 4
 
+function! TryApplyColorSchemes(colorschemes)
+    set background=dark
+    for scheme in a:colorschemes
+        try
+            exec 'colorscheme' scheme
+            return scheme
+        catch
+        endtry
+    endfor
+endfunction
+
+let g:default_colorschemes = ['one', 'onedark', 'molokai', 'desert']
+
+function! ApplyDefaultColorScheme()
+    set background=dark
+    call TryApplyColorSchemes(g:default_colorschemes)
+endfunction
+
 if !exists('s:first_load_general')
 	let s:first_load_general = 1
 
-	set background=dark
-        let s:colorschemes = ['one', 'onedark', 'molokai']
-        for scheme in s:colorschemes
-            try
-                exec 'colorscheme' scheme
-                break
-            catch
-            endtry
-        endfor
+        call ApplyDefaultColorScheme()
 
 	" let g:airline_theme = 'ayu_mirage'
 	" if exists(':AirlineTheme')
