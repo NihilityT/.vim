@@ -1,5 +1,6 @@
 set updatetime=100
 set t_Co=256
+set t_ut=y
 
 set history=2000
 set pumheight=10
@@ -94,6 +95,11 @@ augroup number-toggle
   autocmd!
   autocmd BufEnter,FocusGained,InsertLeave,WinEnter * if &nu | set rnu   | endif
   autocmd BufLeave,FocusLost,InsertEnter,WinLeave   * if &nu | set nornu | endif
+augroup END
+
+augroup restore-last-position
+  autocmd!
+  autocmd BufReadPost * normal `"
 augroup END
 
 set title

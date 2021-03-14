@@ -14,22 +14,18 @@ function! s:escape_font(font, option_lst)
     let font_name = a:font
     if empty(a:option_lst)
         return font_name
-    else
-        if g:system.isWindows
-            return font_name.':'.join(a:option_lst, ':')
-        else
-            let height = matchstr(a:option_lst, '^h')
-            if empty(height)
-                return font_name
-            else
-                if g:system.isOSX
-                    return font_name.height
-                else
-                    return font_name.' '.height[1:]
-                endif
-            endif
-        endif
     endif
+    if g:system.isWindows
+        return font_name.':'.join(a:option_lst, ':')
+    endif
+    let height = matchstr(a:option_lst, '^h')
+    if empty(height)
+        return font_name
+    endif
+    if g:system.isOSX
+        return font_name.height
+    endif
+    return font_name.' '.height[1:]
 endfunction
 
 let s:font_list = []

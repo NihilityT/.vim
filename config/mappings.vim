@@ -17,6 +17,7 @@ noremap <silent> <Leader>bn  :<C-u>bn<CR>
 noremap <silent> <Leader>bp  :<C-u>bp<CR>
 noremap <silent> <Leader>bl  :<C-u>ls<CR>
 noremap <silent> <Leader>bb  :<C-u>ls<CR>:b
+
 noremap <silent> <Leader>bs  :<C-u>sp<CR>
 noremap <silent> <Leader>bv  :<C-u>vs<CR>
 
@@ -42,6 +43,11 @@ cnoremap <C-b> <Left>
 cnoremap <C-d> <Del>
 cnoremap <C-f> <C-d>
 
+nnoremap <A-Up>    <C-W>+
+nnoremap <A-Down>  <C-W>-
+nnoremap <A-Right> <C-W>>
+nnoremap <A-Left>  <C-W><
+
 noremap  <A-h> <C-w>h
 noremap  <A-j> <C-w>j
 noremap  <A-k> <C-w>k
@@ -50,14 +56,12 @@ noremap  <A-c> <C-w>c
 noremap  <A-o> <C-w>o
 noremap  <A-]> <C-w>]
 
-noremap 0 ^
-noremap ^ 0
-
-noremap <silent> <Leader>W  :w!!<CR>
 noremap <silent> <Leader>w  :w<CR>
 
 noremap n /<cr>
 noremap N ?<cr>
+nnoremap <expr> ; getcharsearch().forward ? ';' : ','
+nnoremap <expr> , getcharsearch().forward ? ',' : ';'
 
 function s:text_browsing()
     if exists('#text-browsing#CursorMoved')
@@ -81,9 +85,6 @@ nnoremap [<space> :<c-u>put! =repeat(nr2char(10), v:count1)<cr>'[
 nnoremap ]<space> :<c-u>put =repeat(nr2char(10), v:count1)<cr>
 
 nnoremap <silent> <c-l> :nohlsearch<cr>:diffupdate<cr>:syntax sync fromstart<cr><c-l>
-
-xnoremap < <gv
-xnoremap > >gv
 
 nnoremap <silent> <Leader>=  :call     util#format()<CR>
 
@@ -187,10 +188,6 @@ noremap <expr> <Leader>, getline('.') =~ '\s$' ? '$ge<Right>C;<Esc>' : 'A;<Esc>'
 noremap <expr> <Leader>; getline('.') =~ '\s$' ? '$ge<Right>C;<Esc>' : 'A;<Esc>'
 
 nnoremap g[ `[v`]
-nnoremap <Leader>< <C-W><
-nnoremap <Leader>> <C-W>>
-nnoremap <Leader>- <C-W>-
-nnoremap <Leader>+ <C-W>+
 
 noremap <silent> <leader>l :<C-u>let &conceallevel = &conceallevel ? 0 : 1<CR>:set conceallevel?<CR>
 

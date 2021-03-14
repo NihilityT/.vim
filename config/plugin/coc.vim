@@ -1,11 +1,9 @@
-function! CocAddExtension(extension)
-    if a:0 == 0 | return | endif
-    if exists('*coc#add_extension')
-        call call(coc#add_extension, a:000)
-    else
-        let g:coc_global_extensions = get(g:, 'coc_global_extensions', [])
-        call extend(g:coc_global_extensions, a:000)
+function! CocAddExtension(...)
+    if a:0 == 0
+        return
     endif
+    let g:coc_global_extensions = get(g:, 'coc_global_extensions', [])
+    call uniq(extend(g:coc_global_extensions, a:000))
 endfunction
 
 call SetupCommandAlias('C', 'CocConfig')
@@ -18,25 +16,26 @@ augroup END
 let g:coc_status_error_sign   = '•'
 let g:coc_status_warning_sign = '•'
 
-call CocAddExtension('coc-marketplace')
-
+call CocAddExtension('coc-powershell')
+" call CocAddExtension('coc-marketplace')
+ 
 call CocAddExtension('coc-tsserver')
 call CocAddExtension('coc-eslint')
-
+ 
 call CocAddExtension('coc-json')
 call CocAddExtension('coc-html')
 call CocAddExtension('coc-css')
-call CocAddExtension('coc-wxml')
-
+" call CocAddExtension('coc-wxml')
+ 
 call CocAddExtension('coc-vimlsp')
-call CocAddExtension('coc-yaml')
-
-call CocAddExtension('coc-snippets')
-"call CocAddExtension('coc-git')
-"nmap [c <Plug>(coc-git-prevchunk)
-"nmap ]c <Plug>(coc-git-nextchunk)
-
-call CocAddExtension('coc-highlight')
+" call CocAddExtension('coc-yaml')
+" 
+" call CocAddExtension('coc-snippets')
+" "call CocAddExtension('coc-git')
+" "nmap [c <Plug>(coc-git-prevchunk)
+" "nmap ]c <Plug>(coc-git-nextchunk)
+" 
+" call CocAddExtension('coc-highlight')
 " autocmd coc-custom CursorHold * silent call CocActionAsync('highlight')
 
 let s:python = {}
@@ -94,13 +93,13 @@ function! s:ruby.add(...)
 endfunction
 call s:ruby.add()
 
-call CocAddExtension('coc-lists')
-call CocAddExtension('coc-svg')
-call CocAddExtension('coc-vimtex')
-call CocAddExtension('coc-dictionary')
-call CocAddExtension('coc-tag')
-call CocAddExtension('coc-word')
-call CocAddExtension('coc-syntax')
+" call CocAddExtension('coc-lists')
+" call CocAddExtension('coc-svg')
+" call CocAddExtension('coc-vimtex')
+" call CocAddExtension('coc-dictionary')
+" call CocAddExtension('coc-tag')
+" call CocAddExtension('coc-word')
+" call CocAddExtension('coc-syntax')
 
 "call CocAddExtension('coc-pairs')
 "call CocAddExtension('coc-prettier')
@@ -129,7 +128,7 @@ endfunction
 inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 
 " Use <c-space> to trigger completion.
-inoremap <silent><expr> <c-space> coc#refresh()
+inoremap <silent><expr> <c-o> coc#refresh()
 
 " Use `[p` and `]p` to navigate diagnostics
 nmap <silent> [p <Plug>(coc-diagnostic-prev)
@@ -210,5 +209,5 @@ endfunction
     "\ },
     "\])
 
-call CocConfig('languageserver.ccls.initializationOptions.cache.directory',
-    \          expand("~/.cache/ccls"))
+" call CocConfig('languageserver.ccls.initializationOptions.cache.directory',
+"    \          expand("~/.cache/ccls"))
