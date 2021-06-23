@@ -16,7 +16,7 @@ endfunction
 call AddPlugin('altercation/vim-colors-solarized')
 call AddPlugin('tomasr/molokai')
 call AddPlugin('joshdick/onedark.vim')
-call AddPlugin('taigacute/gruvbox9')
+call AddPlugin('poiuto/gruvbox9')
 call AddPlugin('itchyny/landscape.vim')
 call AddPlugin('rakr/vim-one')
 " }}}
@@ -107,7 +107,7 @@ call AddPlugin('sgur/vim-textobj-parameter')
 call AddPlugin('sheerun/vim-polyglot')
 " }}}
 " 
-" call AddPlugin('NihilityT/UnderCursor')
+call AddPlugin('NihilityT/UnderCursor')
 " " call AddPlugin('luochen1990/rainbow')
 " 
 " 
