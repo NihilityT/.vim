@@ -1,5 +1,4 @@
 let g:lightline = get(g:, 'lightline', {})
-let g:lightline.colorscheme = 'onedark'
 
 function! LightlineExtend(key, value)
     let g:lightline = get(g:, 'lightline', {})
@@ -109,6 +108,7 @@ endfunction
 
 augroup lightline-custom
 	au!
+	autocmd ColorScheme * let g:lightline.colorscheme = g:colors_name
 	autocmd Syntax,ColorScheme * silent! call lightline#enable()
 	autocmd BufWritePost lightline*.vim silent! call lightline#enable()
 augroup END
