@@ -38,23 +38,30 @@ call CocAddExtension('coc-vimlsp')
 " call CocAddExtension('coc-highlight')
 " autocmd coc-custom CursorHold * silent call CocActionAsync('highlight')
 
+function! s:wrap_command(command)
+    if (g:system.isWindows)
+        return 'cmd /c ('.a:command.')'
+    endif
+    return a:command
+endfunction
+
 let s:python = {}
 function! s:python.install_lsp(...)
-    let C = get(a:, 1)
-    let job = job_start('pip install python-language-server', {
-        \ 'exit_cb': { job, v -> v == 0 && !empty('C') ? call(C, []) : 0 }
+    let Cont = get(a:, 1)
+    let job = job_start(s:wrap_command('pip install python-language-server'), {
+        \ 'exit_cb': { job, v -> v == 0 && !empty(Cont) ? call(Cont, []) : 0 }
         \})
 endfunction
 function! s:python.add_to_coc(...)
-    let C = get(a:, 1)
+    let Cont = get(a:, 1)
     call CocAddExtension('coc-python')
-    if !empty(C)
-        call call(C, [])
+    if !empty(Cont)
+        call call(Cont, [])
     endif
 endfunction
 function! s:python.add(...)
     if executable('pip')
-        let job = job_start('pip show python-language-server -qq', {
+        let job = job_start(s:wrap_command('pip show python-language-server -qq'), {
             \ 'exit_cb': { job, v ->
             \               v == 0 ? 
             \                   s:python.add_to_coc() :
@@ -63,34 +70,37 @@ function! s:python.add(...)
             \})
     endif
 endfunction
-call s:python.add()
 
 let s:ruby = {}
 function! s:ruby.install_lsp(...)
-    let C = get(a:, 1)
-    let job = job_start('gem install solargraph', {
-        \ 'exit_cb': { job, v -> v == 0 && !empty('C') ? call(C, []) : 0 }
+    let Cont = get(a:, 1)
+    let job = job_start(s:wrap_command('gem install solargraph'), {
+        \ 'exit_cb': { job, v -> v == 0 && !empty(Cont) ? call(Cont, []) : 0 }
         \})
 endfunction
 function! s:ruby.add_to_coc(...)
-    let C = get(a:, 1)
+    let Cont = get(a:, 1)
     call CocAddExtension('coc-solargraph')
-    if !empty(C)
-        call call(C, [])
+    if empty(Cont)
+        return
     endif
+    call call(Cont, [])
 endfunction
 function! s:ruby.add(...)
-    if executable('gem')
-        let job = job_start('gem list -i --silent solargraph', {
-            \ 'exit_cb': { job, v ->
-            \               v == 0 ? 
-            \                   call(s:python.add_to_coc, []) :
-            \                   call(s:python.install_lsp,
-            \                        [s:python.add_to_coc])
-            \ }
-            \})
+    if !executable('gem')
+        return
     endif
+    let job = job_start(s:wrap_command('gem list -i --silent solargraph'), {
+        \ 'exit_cb': { job, v ->
+        \   v == 0 ?
+        \       call(s:ruby.add_to_coc, []) :
+        \       call(s:ruby.install_lsp,
+        \            [s:ruby.add_to_coc])
+        \ }
+        \})
 endfunction
+
+call s:python.add()
 call s:ruby.add()
 
 " call CocAddExtension('coc-lists')
