@@ -211,5 +211,5 @@ endif
 
 " dein }}}
 
-command! -nargs=* Pupdate call dein#update(<args>)
-command! -nargs=* Pinstall call dein#install(<args>)
+command! -nargs=* PUpdate call dein#update(<args>)
+command! -nargs=* PInstall call dein#install(<args>)
