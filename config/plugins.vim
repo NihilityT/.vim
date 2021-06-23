@@ -89,7 +89,7 @@ call AddPlugin('ryanoasis/vim-devicons', {
 " 
 " git {{{
 call AddPlugin('tpope/vim-fugitive')
-call AddPlugin('airblade/vim-gitgutter')
+call AddPlugin('airblade/vim-gitgutter', { 'lazy': 1, 'on_event': 'VimEnter' })
 " call AddPlugin('junegunn/gv.vim')
 " }}}
 " 
