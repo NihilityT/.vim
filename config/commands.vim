@@ -15,7 +15,7 @@ function! UpdateConfig()
                 \})
             return job_status(job) != 'fail'
         else
-            system('git -C "'.expand('$vim').'" pull --rebase')
+            call system('git -C "'.expand('$vim').'" pull --rebase')
             if v:shell_error
                 source $vimrc
                 echom 'update config succeed.' 

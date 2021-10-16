@@ -9,7 +9,7 @@ nnoremap <silent> <Leader>vY :%y +<CR>
 vnoremap <silent> <Leader>vY :y  +<CR>
 noremap  <silent> <Leader>p "0p
 noremap  <silent> <Leader>P "0P
-noremap  <silent> <Leader>gp "0g
+noremap  <silent> <Leader>gp "0gp
 noremap  <silent> <Leader>gP "0gP
 
 noremap <silent> <Leader>bd  :<C-u>bd<CR>
