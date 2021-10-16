@@ -13,7 +13,7 @@ set mousemodel=popup
 set mouse=a
 
 setg encoding=utf-8
-setg fileencodings=ucs-bom,utf-8,gb18030,latin1
+setg fileencodings=ucs-bom,utf-8,gb18030,gbk,latin1
 setg fileformats=unix,dos
 
 set autoindent
