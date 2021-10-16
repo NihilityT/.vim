@@ -74,7 +74,8 @@ endfunction
 let s:ruby = {}
 function! s:ruby.install_lsp(...)
     let Cont = get(a:, 1)
-    let job = job_start(s:wrap_command('gem install solargraph'), {
+    let cmd = s:wrap_command('gem install solargraph')
+    let job = job_start(cmd, {
         \ 'exit_cb': { job, v -> v == 0 && !empty(Cont) ? call(Cont, []) : 0 }
         \})
 endfunction
@@ -90,12 +91,12 @@ function! s:ruby.add(...)
     if !executable('gem')
         return
     endif
-    let job = job_start(s:wrap_command('gem list -i --silent solargraph'), {
+    let cmd = s:wrap_command('gem list -i -q solargraph')
+    let job = job_start(cmd, {
         \ 'exit_cb': { job, v ->
         \   v == 0 ?
-        \       call(s:ruby.add_to_coc, []) :
-        \       call(s:ruby.install_lsp,
-        \            [s:ruby.add_to_coc])
+        \       s:ruby.add_to_coc() :
+        \       s:ruby.install_lsp(s:ruby.add_to_coc)
         \ }
         \})
 endfunction
