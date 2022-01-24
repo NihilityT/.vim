@@ -36,3 +36,20 @@ if !exists('s:first_load_general')
 	"endif
 endif
 
+function s:matchdelete(group)
+    call map(filter(getmatches(), 'v:val.group == '''.a:group.''''), 'matchdelete(v:val.id)')
+endfunction
+
+function s:matchadd(group, pattern)
+    call s:matchdelete(a:group)
+    call matchadd(a:group, a:pattern)
+endfunction
+
+highlight ExtraWhitespace ctermbg=DarkRed guibg=DarkRed
+augroup ExtraWhitespace
+	au!
+	autocmd BufWinEnter * call s:matchadd('ExtraWhitespace', '\s\+$')
+	autocmd BufWinLeave * call s:matchdelete('ExtraWhitespace')
+	autocmd InsertEnter * call s:matchadd('ExtraWhitespace', '\s\+\%#\@<!$')
+	autocmd InsertLeave * call s:matchadd('ExtraWhitespace', '\s\+$')
+augroup END
