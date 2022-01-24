@@ -104,7 +104,7 @@ call AddPlugin('sgur/vim-textobj-parameter')
 " call AddPlugin('nathanaelkane/vim-indent-guides')
 
 " highlight {{{
-call AddPlugin('sheerun/vim-polyglot')
+call AddPluginNoMerge('sheerun/vim-polyglot')
 " }}}
 " 
 call AddPlugin('NihilityT/UnderCursor')
