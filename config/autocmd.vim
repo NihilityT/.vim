@@ -28,3 +28,9 @@ augroup JSON
 	au!
 	autocmd FileType json,jsonc let &l:sw=4 | let &l:sts=4 | setl et
 augroup END
+
+augroup PowerShell
+	au!
+	autocmd FileType ps1 set bomb
+	autocmd BufWritePre *.ps1 set bomb
+augroup END
